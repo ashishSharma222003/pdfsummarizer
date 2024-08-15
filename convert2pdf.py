@@ -1,31 +1,17 @@
-
-import img2pdf
 from PIL import Image
-import os
+import pytesseract
 
-# storing image path
+# Specify the path to the Tesseract executable (if it's not in your PATH)
+# Example for Windows (uncomment if needed):
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
+# Load the image
 img_path = "claim1.png"
-
-# storing pdf path
-pdf_path = "file.pdf"
-
-# opening image
 image = Image.open(img_path)
 
-# converting into chunks using img2pdf
-pdf_bytes = img2pdf.convert(image.filename)
+# Extract text from the image
+extracted_text = pytesseract.image_to_string(image)
 
-# opening or creating pdf file
-file = open(pdf_path, "wb")
-
-# writing pdf files with chunks
-file.write(pdf_bytes)
-
-# closing image file
-image.close()
-
-# closing pdf file
-file.close()
-
-# output
-print("Successfully made pdf file")
+# Output the extracted text
+print("Extracted Text:")
+print(extracted_text)
